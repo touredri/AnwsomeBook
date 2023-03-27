@@ -1,3 +1,5 @@
+import Storage from './storage.js';
+
 export default class Book {
   constructor(title, author) {
     this.title = title;
@@ -26,7 +28,7 @@ export default class Book {
     if (element.classList.contains('remove')) {
       element.parentElement.remove();
       const bookIndex = Array.from(document.querySelectorAll('.book-list .list')).indexOf(element.parentElement);
-      Book.deleteBook(bookIndex);
+      Storage.deleteBook(bookIndex);
     }
   }
 
@@ -40,35 +42,10 @@ export default class Book {
   }
 
   static displayBooks() {
-    const books = Book.getBooks();
+    const books = Storage.getBooks();
     books.forEach((book) => {
       const newBook = new Book(book.title, book.author);
       newBook.addBook();
     });
-  }
-
-  static addBook(book) {
-    const books = Book.getBooks();
-    // Check if the book already exists before adding it
-    if (!books.some((item) => item.title === book.title && item.author === book.author)) {
-      books.push(book);
-      localStorage.setItem('books', JSON.stringify(books));
-    }
-  }
-
-  static getBooks() {
-    let books;
-    if (localStorage.getItem('books') === null) {
-      books = [];
-    } else {
-      books = JSON.parse(localStorage.getItem('books'));
-    }
-    return books;
-  }
-
-  static deleteBook(bookIndex) {
-    const books = Book.getBooks();
-    books.splice(bookIndex, 1);
-    localStorage.setItem('books', JSON.stringify(books));
   }
 }
