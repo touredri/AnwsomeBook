@@ -13,7 +13,7 @@ export default class Book {
       <a href="#" class="btn btn-danger btn-sm remove">Remove</a>
     `;
     const bookListElement = document.querySelector('.book-list');
-    if(bookListElement) {
+    if (bookListElement) {
       bookListElement.appendChild(div);
       div.querySelector('.remove').addEventListener('click', (event) => {
         event.preventDefault();
@@ -33,7 +33,7 @@ export default class Book {
   static clearFormInputs() {
     const title = document.querySelector('#title');
     const author = document.querySelector('#author');
-    if(title && author) {
+    if (title && author) {
       title.value = '';
       author.value = '';
     }
@@ -50,7 +50,7 @@ export default class Book {
   static addBook(book) {
     const books = Book.getBooks();
     // Check if the book already exists before adding it
-    if(!books.some(item => item.title === book.title && item.author === book.author)) {
+    if (!books.some((item) => item.title === book.title && item.author === book.author)) {
       books.push(book);
       localStorage.setItem('books', JSON.stringify(books));
     }

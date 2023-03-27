@@ -1,4 +1,7 @@
-import Book from "./modules/Book.js";
+import Book from './modules/Book.js';
+
+// Update date on page load
+import updateDate from './modules/date.js';
 
 const home = document.getElementById('home__li');
 const addBook = document.getElementById('add__book__li');
@@ -15,7 +18,7 @@ home.addEventListener('click', () => {
 addBook.addEventListener('click', () => {
   document.querySelector('#home').style.display = 'none';
   const newBookContainer = document.querySelector('.new-book-container');
-  if(newBookContainer) {
+  if (newBookContainer) {
     newBookContainer.style.display = 'flex';
   }
   document.querySelector('#contact').style.display = 'none';
@@ -53,14 +56,11 @@ document.querySelector('.book-list').addEventListener('click', (e) => {
   const removeButton = e.target.closest('.remove');
   if (removeButton) {
     const listContainer = removeButton.closest('.list-container');
-    if(listContainer) {
+    if (listContainer) {
       const bookIndex = Array.from(document.querySelector('.book-list').children).indexOf(listContainer);
       Book.deleteBookList(listContainer);
       Book.deleteBook(bookIndex);
     }
   }
 });
-
-// Update date on page load
-import { updateDate } from "./modules/date.js";
 updateDate();

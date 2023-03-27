@@ -1,3 +1,3 @@
-export function updateDate() {  
+export default function updateDate() {
   document.querySelector('.date').innerHTML = new Date().toString();
 }
