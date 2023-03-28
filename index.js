@@ -1,10 +1,10 @@
 import Book from './modules/Book.js';
 import Storage from './modules/storage.js';
 import { showAdd, showlist, showContact } from './modules/content.js';
-// import updateDate from './modules/date.js';
+import updateDate from './modules/date.js';
 
 // Update date on page load
-// updateDate();
+updateDate();
 
 showAdd();
 showlist();

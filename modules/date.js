@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime } from './luxon.js';
 
 export default function updateDate() {
   const dateTime = DateTime.now();
