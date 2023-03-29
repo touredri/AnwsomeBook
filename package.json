@@ -1,7 +1,7 @@
 {
   "name": "anwsomebook",
   "version": "1.0.0",
-  "description": "",
+  "description": "<a name=\"readme-top\"></a>",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,5 +22,6 @@
   },
   "dependencies": {
     "luxon": "^3.3.0"
-  }
+  },
+  "type": "module"
 }
