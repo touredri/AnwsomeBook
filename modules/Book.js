@@ -1,51 +1,55 @@
-import Storage from './storage.js';
-
 export default class Book {
   constructor(title, author) {
     this.title = title;
     this.author = author;
   }
 
-  addBook() {
-    const div = document.createElement('div');
-    div.classList.add('list');
-    div.innerHTML = `<div class="row">
-      <h3>"${this.title}"</h3> by
-      <p>${this.author}</p></div>
-      <a href="#" class="btn btn-danger btn-sm remove">Remove</a>
-    `;
-    const bookListElement = document.querySelector('.book-list');
-    if (bookListElement) {
-      bookListElement.appendChild(div);
-      div.querySelector('.remove').addEventListener('click', (event) => {
-        event.preventDefault();
-        Book.deleteBookList(event.target);
-      });
-    }
-  }
+  static books = [];
 
-  static deleteBookList(element) {
-    if (element.classList.contains('remove')) {
-      element.parentElement.remove();
-      const bookIndex = Array.from(document.querySelectorAll('.book-list .list')).indexOf(element.parentElement);
-      Storage.deleteBook(bookIndex);
-    }
-  }
+  static listBook = document.querySelector('.book-list');
 
-  static clearFormInputs() {
-    const title = document.querySelector('#title');
-    const author = document.querySelector('#author');
-    if (title && author) {
-      title.value = '';
-      author.value = '';
-    }
-  }
-
-  static displayBooks() {
-    const books = Storage.getBooks();
-    books.forEach((book) => {
-      const newBook = new Book(book.title, book.author);
-      newBook.addBook();
+  static addList() {
+    let output = '';
+    let i = 0;
+    // eslint-disable-next-line array-callback-return
+    Book.books.map((element) => {
+      i += 1;
+      element.id = i;
+      output += `
+      <li class="row list" id="${element.id}">
+        <div class="row"><h3>"${element.title}"</h3> by
+        <p>${element.author}</p></div>
+        <a href="#" class="remove">Remove</a></li>
+      `;
     });
+    Book.listBook.innerHTML = output;
+    return output;
+  }
+
+  static addBook() {
+    const newBook = new Book();
+    newBook.title = document.querySelector('#title').value;
+    newBook.author = document.querySelector('#author').value;
+    this.books.push(newBook);
+    localStorage.setItem('books', JSON.stringify(Book.books));
+    Book.addList();
+  }
+
+  static removeBook(e) {
+    const filterBook = Book.books.filter(
+      (element) => element.id.toString() !== e.toString(),
+    );
+    // console.log(filterBook);
+    Book.books = filterBook;
+    localStorage.setItem('books', JSON.stringify(Book.books));
+    Book.addList();
+  }
+
+  static loadBooks() {
+    const books = JSON.parse(localStorage.getItem('books'));
+    if (books) {
+      Book.books = books;
+      Book.addList();
+    }
   }
 }
